@@ -6,7 +6,7 @@ today = date.today()
 tasks = {}  # Dictionary to store tasks by date
 
 def save_tasks():
-    """Saves the tasks to a file for persistence."""
+    #Saves the tasks to a file
     with open('tasks.txt', 'w') as file:
         for task_date, task_list in tasks.items():
             file.write(f"{task_date}\n")
@@ -58,7 +58,7 @@ def display_month(year, month):
 #Daily Planner Page
 def daily_planner():
     print(f"It is {today} today.")
-    print("Your current to-do list: ")
+    print("Your current to-do list: " + str(tasks.txt))
     current_tasks = tasks.get(str(today), [])
     if not current_tasks:
         print("[empty]")
@@ -80,6 +80,7 @@ def daily_planner():
         print("Invalid input. Please try again.")
         daily_planner()
 
+#Add Tasks
 def add_task():
     task = input("What would you like to add to your to-do list? ")
     if str(today) not in tasks:
@@ -87,6 +88,7 @@ def add_task():
     tasks[str(today)].append(task)
     daily_planner()
 
+#Remove Tasks
 def remove_task(current_tasks):
     if not current_tasks:
         print("Your to-do list is empty.")
