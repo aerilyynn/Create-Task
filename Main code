@@ -1,21 +1,39 @@
 from datetime import date
 import calendar
+import os
 
 today = date.today()
-to_do_list = []
+tasks = {}  # Dictionary to store tasks by date
 
-year = today.year
-month = today.month
-today = date.today()
+def save_tasks():
+    """Saves the tasks to a file for persistence."""
+    with open('tasks.txt', 'w') as file:
+        for task_date, task_list in tasks.items():
+            file.write(f"{task_date}\n")
+            for task in task_list:
+                file.write(f" - {task}\n")
 
-print("Welcome to your digital planner! Here you can write down anything you need to keep track of.")
-print("There is a monthly view, a weekly view, and a daily view.")
-print("You can add items to your to-do list for any specified date.")
+def load_tasks():
+    """Loads tasks from a file if exists."""
+    if os.path.exists('tasks.txt'):
+        with open('tasks.txt', 'r') as file:
+            current_date = None
+            for line in file:
+                line = line.strip()
+                if line and not line.startswith(" - "):  # it's a date
+                    current_date = line
+                    tasks[current_date] = []
+                elif line.startswith(" - "):  # it's a task
+                    tasks[current_date].append(line[3:])
 
+load_tasks()  # Load tasks at the start
+
+#Calendar Page
 def display_month(year, month):
     print(calendar.month(year, month))
-    answer = input("What would you like to do?" + "\n" +  "1. Go to the next month " + "\n" + "2. Go to the previous month" + "\n" + "3. View daily planner" + "\n" + "4. Go back to the main menu" + "\n")
-    if answer == "1": 
+    answer = input("What would you like to do?\n1. Go to the next month\n2. Go to the previous month\n3. View daily planner\n4. Exit\n")
+    
+    if answer == "1":
         month += 1
         if month > 12:
             month = 1
@@ -30,58 +48,73 @@ def display_month(year, month):
     elif answer == "3":
         daily_planner()
     elif answer == "4":
-        return
+        save_tasks()
+        exit()
     else:
         print("Invalid input. Please try again.")
         display_month(year, month)
-    
+
+
+#Daily Planner Page
 def daily_planner():
-    print("It is " + str(today) + " today.")
+    print(f"It is {today} today.")
     print("Your current to-do list: ")
-    if len(to_do_list) == 0:
+    current_tasks = tasks.get(str(today), [])
+    if not current_tasks:
         print("[empty]")
     else:
-        for item in to_do_list:
+        for item in current_tasks:
             print(item)
-    print("\n")
 
-    answer = input("What would you like to do?" + "\n" + "1. Add an item to your to-do list" + "\n" + "2. Remove an item from your to-do list" + "\n" + "3. View monthly calendar" + "\n" + "4. Go back to the main menu" + "\n")
+    answer = input("What would you like to do?\n1. Add an item to your to-do list\n2. Remove an item from your to-do list\n3. View monthly calendar\n4. Exit\n")
     if answer == "1":
-        add = input("What would you like to add to your to-do list? ")
-        to_do_list.append(add)
-        daily_planner()
+        add_task()
     elif answer == "2":
-        if len(to_do_list) == 0:
-            print("Your to-do list is empty.")
+        remove_task(current_tasks)
+    elif answer == "3":
+        display_month(today.year, today.month)
+    elif answer == "4":
+        save_tasks()
+        exit()
+    else:
+        print("Invalid input. Please try again.")
+        daily_planner()
+
+def add_task():
+    task = input("What would you like to add to your to-do list? ")
+    if str(today) not in tasks:
+        tasks[str(today)] = []
+    tasks[str(today)].append(task)
+    daily_planner()
+
+def remove_task(current_tasks):
+    if not current_tasks:
+        print("Your to-do list is empty.")
+        daily_planner()
+    else:
+        print("Your current to-do list: ")
+        for item in current_tasks:
+            print(item)
+        item_to_remove = input("Which item would you like to remove? ")
+        if item_to_remove in current_tasks:
+            current_tasks.remove(item_to_remove)
+            print(f"{item_to_remove} has been removed from your to-do list.")
             daily_planner()
         else:
-            print("Your current to-do list: ")
-            for item in to_do_list:
-                print(item)
-            item_to_remove = input("Which item would you like to remove? ")
-            if item_to_remove in to_do_list:
-                to_do_list.remove(item_to_remove)
-                print(item_to_remove + " has been removed from your to-do list.")
-                daily_planner()
-            else:
-                print("\n" + "That item is not in your to-do list.")
-                daily_planner()
-    elif answer == "3":
-        display_month(year, month)
-    elif answer == "4":
-        return
-    else:
-        print("Invalid input. Please try again.")
-        daily_planner()
+            print("\nThat item is not in your to-do list.")
+            daily_planner()
 
+def main_menu():
+    while True:
+        answer = input("What would you like to do?\n1. View monthly calendar\n2. View daily planner\n3. Exit\n")
+        if answer == "1":
+            display_month(today.year, today.month)
+        elif answer == "2":
+            daily_planner()
+        elif answer == "3":
+            save_tasks()  # Save before exiting
+            break
+        else:
+            print("Invalid input. Please try again.")
 
-while True:
-    answer = input("What would you like to do? " + "\n" + "1. View monthly calendar" + "\n" + "2. View daily planner" + "\n" + "3. Exit\n")
-    if answer == "1":
-        display_month(year, month)
-    elif answer == "2":
-        daily_planner()
-    elif answer == "3":
-        break
-    else:
-        print("Invalid input. Please try again.")
+main_menu()  # Start the program
