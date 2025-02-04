@@ -106,6 +106,7 @@ def remove_task(current_tasks):
 
 def main_menu():
     while True:
+        print("Welcome to your digital planner.\nThere is a monthly view, a weekly view, and a daily view.\nYou can add items to your to-do list for any specified date.\n")
         answer = input("What would you like to do?\n1. View monthly calendar\n2. View daily planner\n3. Exit\n")
         if answer == "1":
             display_month(today.year, today.month)
