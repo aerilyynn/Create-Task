@@ -12,8 +12,6 @@ print("\nWelcome to your digital planner! Here you can write down anything you n
 print("There is a monthly view, a weekly view, and a daily view.")
 print("You can add items to your to-do list for any specified date.\n")
 
-
-### MONTHLY VIEW ###
 def display_month(year, month):
     print("\n--- Monthly Calendar ---")
     print(calendar.month(year, month))
@@ -37,15 +35,13 @@ def display_month(year, month):
     else:
         print("Invalid input. Please try again.")
         display_month(year, month)
-
-
-### DAILY VIEW ###
+    
 def daily_planner():
     print("\n--- Daily Planner ---")
     print("It is " + str(today) + " today.")
     print("Your current to-do list: ")
     if len(to_do_list) == 0:
-        print("[empty]")  # if the to-do list is empty, print "[empty]"
+        print("[empty]")
     else:
         for index, item in enumerate(to_do_list, 1):
             print(f"{index}. {item}")
@@ -84,7 +80,7 @@ def daily_planner():
         print("Invalid input. Please try again.")
         daily_planner()
 
-### MAIN MENU ###
+
 while True:
     answer = input("What would you like to do?\n1. View monthly calendar\n2. View daily planner\n3. Exit (This will reset your data)\n")
     if answer == "1":
