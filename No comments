@@ -16,7 +16,7 @@ def clear_screen():
 
 def display_month(year, month):
     clear_screen()
-    print("\n--- Monthly Calendar ---")
+    print("--- Monthly Calendar ---")
     print(calendar.month(year, month))
     answer = input("What would you like to do?\n1. Go to the next month\n2. Go to the previous month\n3. View daily planner\n4. Exit (This will reset your data)\n")
     if answer == "1":
@@ -42,7 +42,7 @@ def display_month(year, month):
 
 def daily_planner():
     clear_screen()
-    print("\n--- Daily Planner ---")
+    print("--- Daily Planner ---")
     print("It is " + str(today) + " today.")
     print("Your current to-do list: ")
     if len(to_do_list) == 0:
