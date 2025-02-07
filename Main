@@ -1,5 +1,6 @@
 from datetime import date
 import calendar
+import os
 
 #Declaring vars
 today = date.today()
@@ -9,13 +10,13 @@ year = today.year
 month = today.month
 today = date.today()
 
-print("\nWelcome to your digital planner! Here you can write down anything you need to keep track of.")
-print("There is a monthly view, a weekly view, and a daily view.")
-print("You can add items to your to-do list for any specified date.\n")
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen each time
 
 
 ### MONTHLY VIEW ###
 def display_month(year, month):
+    clear_screen()
     print("\n--- Monthly Calendar ---")
     print(calendar.month(year, month))
     answer = input("What would you like to do?\n1. Go to the next month\n2. Go to the previous month\n3. View daily planner\n4. Exit (This will reset your data)\n")
@@ -42,6 +43,7 @@ def display_month(year, month):
 
 ### DAILY VIEW ###
 def daily_planner():
+    clear_screen()
     print("\n--- Daily Planner ---")
     print("It is " + str(today) + " today.")
     print("Your current to-do list: ")
@@ -62,9 +64,6 @@ def daily_planner():
             print("Your to-do list is empty.")
             daily_planner()
         else:
-            print("Your current to-do list: ")
-            for index, item in enumerate(to_do_list, 1):
-                print(f"{index}. {item}")
             try:
                 item_number = int(input("Enter the number of the item you would like to remove: "))
                 if 1 <= item_number <= len(to_do_list):
@@ -85,14 +84,18 @@ def daily_planner():
         print("Invalid input. Please try again.")
         daily_planner()
 
-### MAIN MENU ###
-while True:
-    answer = input("What would you like to do?\n1. View monthly calendar\n2. View daily planner\n3. Exit (This will reset your data)\n")
-    if answer == "1":
-        display_month(year, month)
-    elif answer == "2":
-        daily_planner()
-    elif answer == "3":
-        break
-    else:
-        print("Invalid input. Please try again.")
+
+### MAIN *one time use so it doesn't need a function ###
+clear_screen()
+print("\nWelcome to your digital planner! Here you can write down anything you need to keep track of.")
+print("There is a monthly view, a weekly view, and a daily view.")
+print("You can add items to your to-do list for any specified date.\n")
+answer = input("What would you like to do?\n1. View monthly calendar\n2. View daily planner\n3. Exit (This will reset your data)\n")
+if answer == "1":
+    display_month(year, month)
+elif answer == "2":
+    daily_planner()
+elif answer == "3":
+    exit()
+else:
+    print("Invalid input. Please try again.")
