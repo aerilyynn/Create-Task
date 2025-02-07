@@ -11,7 +11,7 @@ month = today.month
 today = date.today()
 
 def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen each time
+    os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen each time for better readability
 
 
 ### MONTHLY VIEW ###
@@ -85,7 +85,7 @@ def daily_planner():
         daily_planner()
 
 
-### MAIN *one time use so it doesn't need a function ###
+### MAIN (one time use so it doesn't need a function) ###
 clear_screen()
 print("\nWelcome to your digital planner! Here you can write down anything you need to keep track of.")
 print("There is a monthly view, a weekly view, and a daily view.")
