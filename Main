@@ -91,7 +91,8 @@ def daily_planner():
 clear_screen()
 print("\nWelcome to your digital planner! Here you can write down anything you need to keep track of.")
 print("There is a monthly view, a weekly view, and a daily view.")
-print("You can add items to your to-do list for any specified date.\n")
+print("You can add items to your to-do list for any specified date.")
+print("Exiting will reset your data, but you can keep the code running for as long as you'd like.\n")
 answer = input("What would you like to do?\n1. View monthly calendar\n2. View daily planner\n3. Exit (This will reset your data)\n")
 if answer == "1":
     display_month(year, month)
