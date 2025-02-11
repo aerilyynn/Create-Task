@@ -20,7 +20,11 @@ def display_month(year, month):
         clear_screen()
         print("\n--- Monthly Calendar ---")
         print(calendar.month(year, month))
-        answer = input("What would you like to do?\n1. Go to the next month\n2. Go to the previous month\n3. View daily planner\n4. Exit (This will reset your data)\n")
+        answer = input("""What would you like to do?
+1. Go to the next month
+2. Go to the previous month
+3. View daily planner
+4. Exit (This will reset your data)\n""")
         if answer == "1":
             month += 1
             if month > 12:
@@ -37,9 +41,6 @@ def display_month(year, month):
             daily_planner()
         elif answer == "4":
             exit()
-        else:
-            print("Invalid input. Please try again.")
-            display_month(year, month)
 
 
 ### DAILY VIEW ###
@@ -56,49 +57,50 @@ def daily_planner():
                 print(f"{index}. {item}") #this assigns each item in the list a number so it's easier to remove and makes it more readable
         print("\n")
 
-        answer = input("What would you like to do?\n1. Add an item to your to-do list\n2. Remove an item from your to-do list\n3. View monthly calendar\n4. Exit (This will reset your data)\n")
+        answer = input("""What would you like to do?
+1. Add an item to your to-do list
+2. Remove an item from your to-do list
+3. View monthly calendar
+4. Exit (This will reset your data)\n""")
         if answer == "1":
             add = input("What would you like to add to your to-do list? ")
             to_do_list.append(add)
             daily_planner()
         elif answer == "2":
             if len(to_do_list) == 0:
-                print("Your to-do list is empty.")
                 daily_planner()
             else:
-                try:
-                    item_number = int(input("Enter the number of the item you would like to remove: "))
-                    if 1 <= item_number <= len(to_do_list):
-                        removed_item = to_do_list.pop(item_number - 1)
-                        print(f"{removed_item} has been removed from your to-do list.")
-                        daily_planner()
-                    else:
-                        print("Invalid number. Please try again.")
-                        daily_planner()
-                except ValueError:
-                    print("Invalid input. Please enter a number.")
+                item_number = int(input("Enter the number of the item you would like to remove: "))
+                if 1 <= item_number <= len(to_do_list):
+                    removed_item = to_do_list.pop(item_number - 1)
+                    print(f"{removed_item} has been removed from your to-do list.")
+                    daily_planner()
+                else:
+                    print("Invalid number. Please try again.")
                     daily_planner()
         elif answer == "3":
             display_month(year, month)
         elif answer == "4":
             exit()
-        else:
-            print("Invalid input. Please try again.")
+
+
+### MAIN MENU ###
+def main_menu():
+    while True:
+        clear_screen()
+        print("\nWelcome to your digital planner! Here you can write down anything you need to keep track of.")
+        print("There is a monthly view, a weekly view, and a daily view.")
+        print("You can add items to your to-do list for any specified date.")
+        print("Exiting will reset your data, but you can keep the code running for as long as you'd like.\n")
+        answer = input("""What would you like to do?
+1. View monthly calendar
+2. View daily planner
+3. Exit (This will reset your data)\n""")
+        if answer == "1":
+            display_month(year, month)
+        elif answer == "2":
             daily_planner()
+        elif answer == "3":
+            exit()
 
-
-### MAIN (one time use so it doesn't need a function) ###
-clear_screen()
-print("\nWelcome to your digital planner! Here you can write down anything you need to keep track of.")
-print("There is a monthly view, a weekly view, and a daily view.")
-print("You can add items to your to-do list for any specified date.")
-print("Exiting will reset your data, but you can keep the code running for as long as you'd like.\n")
-answer = input("What would you like to do?\n1. View monthly calendar\n2. View daily planner\n3. Exit (This will reset your data)\n")
-if answer == "1":
-    display_month(year, month)
-elif answer == "2":
-    daily_planner()
-elif answer == "3":
-    exit()
-else:
-    print("Invalid input. Please try again.")
+main_menu()
