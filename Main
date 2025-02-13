@@ -54,7 +54,8 @@ def daily_planner():
             print("[empty]")  # if the to-do list is empty, print "[empty]"
         else:
             for index, item in enumerate(to_do_list, 1):
-                print(f"{index}. {item}") #this assigns each item in the list a number so it's easier to remove and makes it more readable
+                print(f"{index}. {item}") #this assigns each item in the list a number 
+                #so it's easier to remove and makes it more readable
         print("\n")
 
         answer = input("""What would you like to do?
@@ -73,10 +74,6 @@ def daily_planner():
                 item_number = int(input("Enter the number of the item you would like to remove: "))
                 if 1 <= item_number <= len(to_do_list):
                     removed_item = to_do_list.pop(item_number - 1)
-                    print(f"{removed_item} has been removed from your to-do list.")
-                    daily_planner()
-                else:
-                    print("Invalid number. Please try again.")
                     daily_planner()
         elif answer == "3":
             display_month(year, month)
